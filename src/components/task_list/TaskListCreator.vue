@@ -12,7 +12,7 @@
                     @focusout="create_list"
                     placeholder="Введите название списка"
             ></base-input>
-            <div class="buttons-row">
+            <div class="buttons-row space-between">
                 <base-button
                         title="Добавить список"
                         @click="create_list">
@@ -43,13 +43,14 @@
                         name: this.name
                     });
                     this.create_list_mode = false;
+                    this.name = ''
                 }
             },
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .task-list-creator {
         width: 200px;
         padding: 10px;
@@ -64,5 +65,8 @@
         padding-top: 3px;
         border-radius: var(--border_radius);
         text-align: center;
+        &:hover {
+            background-color: #afacacc7;
+        }
     }
 </style>

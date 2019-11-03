@@ -1,18 +1,20 @@
 <template>
-    <div class="basic-block" id="app">
-        <h1>Vuello</h1>
+    <div id="app" @click="$store.dispatch('close_popups')">
+        <base-popup></base-popup>
+        <header><h1>Vuello</h1></header>
         <workflow></workflow>
     </div>
 </template>
 
 <script>
     import Workflow from "./components/Workflow";
-
+    import BasePopup from "./components/base/BasePopup";
     export default {
         name: "app",
         components: {
+            BasePopup,
             Workflow
-        }
+        },
     };
 </script>
 
@@ -23,14 +25,31 @@
         --secondary-color: #b5b4b4;
         background: url("../public/background.jpg");
     }
-
-    .basic-block {
-        display: grid;
-        min-width: 300px;
+    * {
+        margin: 0;
+        padding: 0;
     }
 
-    .buttons-row {
+    html, body, #app {
+        height: -webkit-fill-available;
+    }
+    header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        width: 100%;
+        height: 50px;
+        background-color: #37383aa6;
+        margin-bottom: 20px;
+    }
+
+    .buttons-row.space-between {
         display: flex;
         justify-content: space-between;
+    }
+    .buttons-row.space-evenely {
+        display: flex;
+        justify-content: space-evenly;
     }
 </style>

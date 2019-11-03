@@ -6,10 +6,10 @@
             {{list.name}}
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="18" height="18" viewBox="0 0 18 18"
-                 @click="delete_list">
+                 @click.stop="check_delete_list">
                 <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
             </svg>
-            </span>
+        </span>
         <base-input
                 v-if="edit_list_mode"
                 v-model="name"
@@ -17,27 +17,27 @@
                 @focusout="edit_list_name"
         >
         </base-input>
-        <div v-if="card_list">
-            <task-card v-for="card in card_list" :key="card"></task-card>
-        </div>
-        <div v-else class="create-card" @click="create_card">
-            Добавить задачу
-        </div>
+        <task-card v-for="(card, index) in cards"
+                   :key="index"
+                   :card_id="index"
+                   :list_id="list_id">
+        </task-card>
+       <task-card-creator :list_id="list_id"></task-card-creator>
     </div>
 </template>
 
 <script>
     import TaskCard from "../task_card/TaskCard";
-
+    import TaskCardCreator from "../task_card/TaskCardCreator";
     export default {
         name: "TaskList",
         props: ['list_id'],
         components: {
-            TaskCard
+            TaskCard,
+            TaskCardCreator
         },
         data() {
             return {
-                card_list: null,
                 name: '',
                 edit_list_mode: false
             };
@@ -45,14 +45,22 @@
         computed: {
             list() {
                 return this.$store.getters.get_task_list(this.list_id);
+            },
+            cards() {
+                return this.$store.getters.get_cards_list(this.list_id)
             }
         },
         methods: {
-            create_card() {
-
+            check_delete_list() {
+                this.$store.commit('setPopupOptions', {
+                    message: 'Вы действительно хотите удалить список?',
+                    show: true,
+                    callback:this.delete_list,
+                    args: null
+                })
             },
             delete_list() {
-                this.$store.commit('delete_list', this.list_id);
+                this.$store.commit('delete_list', this.list_id)
             },
             edit_list_name() {
                 if (this.name !== '') {
@@ -69,7 +77,7 @@
 
 <style scoped lang="scss">
     .list-container {
-        display: flex;
+        display: inline-flex;
         flex-direction: column;
         padding: 10px;
         margin-right: 10px;
@@ -86,18 +94,6 @@
             padding-left: 10px;
             margin-bottom: 10px;
             cursor: pointer;
-        }
-    }
-
-    .create-card {
-        cursor: pointer;
-        padding: 3px;
-        border-radius: var(--border_radius);
-        background-color: #969696;
-        text-align: center;
-
-        &:hover {
-            background-color: #ababab;
         }
     }
 </style>

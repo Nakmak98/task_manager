@@ -36,9 +36,11 @@
 <style scoped>
     .workflow-container {
         display: flex;
+        width: 85%;
+        margin: 0 auto;
     }
 
     .task-lists-container {
-        display: inherit;
+        display: inline-block;
     }
 </style>
