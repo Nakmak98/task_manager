@@ -10,8 +10,18 @@
                     type="text"
                     v-model="name"
                     placeholder="Введите имя карточки"
-                    @focusout="create_card"
             ></base-input>
+            <div class="buttons-row space-between">
+                <base-button
+                        title="Добавить"
+                        @click="create_card">
+                </base-button>
+                <base-button
+                        button_type="secondary"
+                        title="Отмена"
+                        @click="create_card_mode = false">
+                </base-button>
+            </div>
         </div>
     </div>
 </template>

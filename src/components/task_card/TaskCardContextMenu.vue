@@ -2,7 +2,7 @@
     <div class="context-menu">
         <div v-if="move_status" @click="$parent.move_card">Переместить</div>
         <div @click="$parent.edit_card">Редактировать</div>
-        <div @click="$parent.delete_card">Удалить</div>
+        <div @click="$parent.check_delete_card">Удалить</div>
     </div>
 </template>
 

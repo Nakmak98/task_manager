@@ -35,9 +35,11 @@
 
 <style scoped>
     .workflow-container {
-        display: flex;
-        width: 85%;
-        margin: 0 auto;
+        display: -webkit-box;
+        white-space: nowrap;
+        overflow-x: scroll;
+        height: inherit;
+        padding: 0 20px;
     }
 
     .task-lists-container {

@@ -26,7 +26,8 @@ export default new Vuex.Store({
             state.cards_lists.push([])
         },
         delete_list(state, list) {
-            state.task_lists.splice(list.id, 1);
+            state.task_lists.splice(list, 1);
+            state.cards_lists.splice(list, 1);
         },
         edit_list(state, list) {
             state.task_lists.splice(list.id, 1, {name: list.name});
@@ -72,11 +73,20 @@ export default new Vuex.Store({
             payload.card = card;
             commit('add_card', payload)
         },
+        delete_list({state, commit}, list_id) {
+            const length = state.cards_lists[list_id].length - 1;
+            for (let card_id = length; card_id >= 0; card_id--) {
+                commit('delete_card', {
+                    list_id: list_id,
+                    card_id: card_id
+                });
+            }
+            commit('delete_list', list_id);
+        },
         close_popups({state, commit}) {
-            if(state.context_menu_status){
+            if (state.context_menu_status) {
                 commit('close_context_menu');
             }
-            // commit('close_popup');
         }
     }
 });

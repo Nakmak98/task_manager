@@ -9,7 +9,6 @@
             <base-input
                     v-model="name"
                     type="text"
-                    @focusout="create_list"
                     placeholder="Введите название списка"
             ></base-input>
             <div class="buttons-row space-between">

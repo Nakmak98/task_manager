@@ -55,12 +55,12 @@
                 this.$store.commit('setPopupOptions', {
                     message: 'Вы действительно хотите удалить список?',
                     show: true,
-                    callback:this.delete_list,
+                    callback: this.delete_list,
                     args: null
                 })
             },
             delete_list() {
-                this.$store.commit('delete_list', this.list_id)
+                this.$store.dispatch('delete_list', this.list_id);
             },
             edit_list_name() {
                 if (this.name !== '') {

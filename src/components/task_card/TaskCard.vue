@@ -3,7 +3,7 @@
         <div class="task-card"
              v-if="!card_edit_mode"
              @click.right.prevent="show">
-            <span >{{card}}</span>
+            <div>{{card}}</div>
         </div>
         <base-input
                 v-else type="text"
@@ -36,7 +36,7 @@
                 show_context_menu: false
             }
         },
-        mounted () {
+        mounted() {
             this.name = this.card
         },
         computed: {
@@ -45,6 +45,7 @@
             },
             context_menu_status() {
                 if (!this.$store.state.context_menu_status) {
+                    // eslint-disable-next-line
                     this.show_context_menu = false;
                     return false
                 } else {
@@ -61,12 +62,19 @@
                     this.show_context_menu = true
                 }
             },
-
             move_card() {
                 this.$store.dispatch('move_card', {
                     card_id: this.card_id,
                     list_id: this.list_id
                 });
+            },
+            check_delete_card() {
+                this.$store.commit('setPopupOptions', {
+                    message: 'Вы действительно хотите удалить карточку?',
+                    show: true,
+                    callback: this.delete_card,
+                    args: null
+                })
             },
             delete_card() {
                 this.$store.commit('delete_card', {
@@ -75,14 +83,14 @@
                 });
             },
             edit_card() {
-                if(this.card_edit_mode && this.name) {
+                if (this.card_edit_mode && this.name) {
                     this.$store.commit('edit_card', {
                         card_id: this.card_id,
                         list_id: this.list_id,
                         card: this.name
                     });
                     this.card_edit_mode = false
-                } else  {
+                } else {
                     this.card_edit_mode = true
                 }
 
@@ -103,7 +111,9 @@
             background-color: white;
         }
 
-        span {
+        div {
+            white-space: normal;
+            word-wrap: break-word;
             padding: 7px
         }
     }

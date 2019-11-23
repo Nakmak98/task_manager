@@ -31,7 +31,7 @@
     }
 
     html, body, #app {
-        height: -webkit-fill-available;
+        height: 98.1%;
     }
     header {
         display: flex;
